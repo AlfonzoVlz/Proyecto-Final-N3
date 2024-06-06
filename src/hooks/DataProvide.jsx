@@ -16,13 +16,14 @@ export const DataProvide = ({ children }) => {
         } catch (error) {
             console.error('Error fetching weather data:', error)
         }
-    }
+    }  
     
-    //Se obtiene los datos por el nombre de la ciudad
+    //Se obtiene los datos del clima por el nombre de la ciudad
     const getDataByCty = async (cityName) => {
         try {
         const rs = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=9174ddaf8fa6b3aa86b127d7c27fd64d`)
         const rsJson = await rs.json()
+        console.log(rsJson)
         setData(rsJson)            
         } catch (error) {
             console.error('Error fetching city name weather:', error)
@@ -40,7 +41,7 @@ export const DataProvide = ({ children }) => {
             console.error('Error fetching city name:', error)
         }
 
-    }
+    } 
 
     const getLocation = () => {
         if (navigator.geolocation) {
@@ -60,12 +61,12 @@ export const DataProvide = ({ children }) => {
         getLocation()
     }, [])
 
-    useEffect(() => {
+   useEffect(() => {
         if (lotation) {
-            getData(location.lat, location.lon);
-            getCityName(location.lat, location.lon);
+            getData('44.34', '10.99');
+            getCityName('44.34', '10.99')
         }
-    }, [])
+    }, [])  
     return (
         <dataContext.Provider value={{
             data,

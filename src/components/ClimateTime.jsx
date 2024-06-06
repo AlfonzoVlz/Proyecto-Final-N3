@@ -3,10 +3,12 @@ import { dataContext } from '../hooks/DataProvide'
 
 
 export const ClimateTime = () => {
-    const { data } = useContext(dataContext)
+    const { data } = useContext(dataContext);
     const [unit, setUnit] = useState('C');
 
-    
+    if (!data || !data.list) return <div>No weather data available</div>;
+    const foreCasts = data.list.filter(forecast => forecast.dt_txt.includes("12:00:00"));
+
     const converTemperature = (temp) => {
         return unit === 'C' ? Math.round(temp - 273.15) : Math.round((temp - 273.15) * 9 / 5 + 32);
     };
@@ -24,8 +26,21 @@ export const ClimateTime = () => {
                         style={{ width: '40px', height: '40px' }}
                         onClick={() => setUnit('F')}>°F</button>
                 </div>
-
+                <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        {foreCasts.slice(0, 5).map((forecast, index) => (
+          <div key={index} className="bg-[#1E213A] p-3 rounded-lg text-center w-full h-44">
+            <p className="text-xs mb-1 py-4">
+              {new Date(forecast.dt * 1000).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+            </p>
+            <img src={`https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`} alt="weather icon" className="mx-auto w-10 h-10" />
+            <p className="text-xs py-2">
+              <span className="font-semibold">{converTemperature(forecast.main.temp_max)}°{unit} Mx -</span> {converTemperature(forecast.main.temp_min)}°{unit} Mn
+            </p>
+          </div>
+        ))}
+      </div>
                     
+                       
                 </div>
             </div>
     )

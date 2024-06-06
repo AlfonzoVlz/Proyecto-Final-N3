@@ -39,7 +39,7 @@ export const ButtonLocation = () => {
   return (
     <div>
         <button
-        className="text-white">
+        className="text-white mt-10 mr-5">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

@@ -1,12 +1,62 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { ButtonLocation } from './ButtonLocation'
 
-export const WeatherCard = () => {
+export const WeatherCard = ({data, toggleModal}) => {
+
+
+  const [currentTemperature, setCurrentTemperature] = useState('');
+  const [currentWeatherDescription, setCurrentWeatherDescription] = useState('');
+  const [currentDate, setCurrentDate] = useState('');
+
+  useEffect(() => {
+      const updateWeather = () => {
+          if (!data || !data.list || data.list.length === 0) {
+              return;
+          }
+
+          const currentWeather = data.list[0];
+
+          if (!currentWeather.main || !currentWeather.weather || currentWeather.weather.length === 0) {
+              return;
+          }
+
+          const temperature = currentWeather.main.temp;
+          const weatherDescription = currentWeather.weather[0].description;
+          const temperatureInCelsius = kelvinToCelsius(temperature);
+          setCurrentTemperature(temperatureInCelsius.toFixed(2));
+          setCurrentWeatherDescription(weatherDescription);
+
+          // Actualizar la fecha actual
+          setCurrentDate(getCurrentDate());
+      };
+
+      const kelvinToCelsius = (temp) => {
+          return temp - 273.15;
+      };
+
+      const getCurrentDate = () => {
+          const date = new Date();
+          const options = { weekday: 'long', month: 'short', day: 'numeric' };
+          return date.toLocaleDateString('en-US', options);
+      };
+
+      // Llamar a la función de actualización del clima cuando se monte el componente
+      updateWeather();
+
+      // Configurar un temporizador para que se actualice cada 3 horas
+      const interval = setInterval(() => {
+          updateWeather();
+      }, 3 * 60 * 60 * 1000); // 3 horas en milisegundos
+
+      // Limpiar el temporizador cuando el componente se desmonte para evitar fugas de memoria
+      return () => clearInterval(interval);
+
+  }, [data]);
 
   return (
     <div className="relative h-screen w-full md:max-w-[390px] mx-auto bg-[#1E213A] text-white ">
       <div className="flex justify-between items-center ">
-        <button className=' bg-[#6E707A] w-[161px] h-10 mt-10 ml-10  hover:bg-gray-600'>
+        <button className=' bg-[#6E707A] w-[161px] h-10 mt-10 ml-10  hover:bg-gray-600' onClick={toggleModal}>
           Search for places
         </button>
         <ButtonLocation/>
@@ -18,7 +68,7 @@ export const WeatherCard = () => {
         </figure>
 
         <figure className='w-48 absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-50'>
-          <img src="Shower.png" alt="" />
+          <img src="" alt="" />
         </figure>
       </div>
 
@@ -42,9 +92,6 @@ export const WeatherCard = () => {
           <span className='ml-2'>Location</span>
         </div>
       </div>
-
-
-
     </div>
   )
 }

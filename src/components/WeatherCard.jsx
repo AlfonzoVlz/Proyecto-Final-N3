@@ -5,7 +5,7 @@ export const WeatherCard = () => {
 
   return (
     <div className="relative h-screen w-full md:max-w-[390px] mx-auto bg-[#1E213A] text-white ">
-      <div className='float-left'>
+      <div className="flex justify-between items-center ">
         <button className=' bg-[#6E707A] w-[161px] h-10 mt-10 ml-10  hover:bg-gray-600'>
           Search for places
         </button>

@@ -33,7 +33,7 @@ export const ClimateTime = () => {
                             <p className="text-xs mb-1 py-4">
                                 {new Date(forecast.dt * 1000).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
                             </p>
-                            <img src={`https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`} alt="weather icon" className="mx-auto w-10 h-10" />
+                            <img src={`https://openweathermap.org/img/wn/${forecast.weather[0].icon}.png`} alt="weather icon" className="mx-auto w-10 h-10" />
                             <p className="text-xs py-2">
                                 <span className="font-semibold">{converTemperature(forecast.main.temp_max)}°{unit} Mx -</span> {converTemperature(forecast.main.temp_min)}°{unit} Mn
                             </p>

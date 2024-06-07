@@ -45,7 +45,7 @@ export const WeatherCard = ({data, toggleModal}) => {
       
 
   return (
-    <div className="relative h-screen w-full md:max-w-[390px] mx-auto bg-[#1E213A] text-white p-6 transition-transform duration-300 ease-in-out transform translate-x-0">
+    <div className="relative h-screen w-full md:max-w-[390px] mx-auto bg-[#1E213A]  transition-transform duration-300 ease-in-out transform translate-x-0 ">
       <div className="flex justify-between items-center ">
         <button className=' bg-[#6E707A] w-[161px] h-10 mt-10 ml-10  hover:bg-gray-600' onClick={toggleModal}>
           Search for places
@@ -53,7 +53,7 @@ export const WeatherCard = ({data, toggleModal}) => {
         <ButtonLocation/>
       </div>
 
-      <div className='w-full h-2/6 relative '>
+      <div className='w-full h-2/5 relative '>
         <figure className='w-full h-full opacity-20'>
           <img src="Cloud-background.png" alt="" className='object-cover w-full h-full' />
         </figure>
